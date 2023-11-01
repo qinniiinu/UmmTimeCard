@@ -6,13 +6,28 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <p>
-      navigation works!
-    </p>
+    <ol class="breadcrumb">
+      <li><a href="#">one </a></li>
+      <li><a href="#">second</a></li>
+      <li><a href="#">three</a></li>
+      <li><a href="#">four</a></li>
+    </ol>
   `,
   styles: [
-  ]
+    `
+      .breadcrumb {
+        @apply flex m-3;
+        li {
+          @apply block;
+          &:not(:last-child):after {
+            content: '   |    ';
+          }
+          a {
+            @apply p-2 m-2 bg-blue-300;
+          }
+        }
+      }
+    `,
+  ],
 })
-export class NavigationComponent {
-
-}
+export class NavigationComponent {}

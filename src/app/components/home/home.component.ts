@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,19 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <p class="bg-red-500">
-      home works!
-      <button (click)="signOut()">logout</button>
-    </p>
-  `,
+  template: ` <p class="w-full h-full">home works!</p> `,
   styles: [],
 })
-export class HomeComponent {
-  constructor(private router: Router) {}
-  signOut() {
-    sessionStorage.removeItem('loginUser');
-
-    this.router.navigate(['login']);
-  }
-}
+export class HomeComponent {}

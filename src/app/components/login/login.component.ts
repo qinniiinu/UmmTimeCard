@@ -7,26 +7,38 @@ import { MatInputModule } from '@angular/material/input';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   template: `
-    <mat-card class="w-1/2">
-      <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="login()">
-          <mat-form-field>
-            login<input matInput type="text" formControlName="loginId" />
-          </mat-form-field>
-          <mat-form-field>
-            password<input matInput type="password" formControlName="password" />
-          </mat-form-field>
-          <button class="bg-blue-400" mat-button type="submit" [disabled]="form.invalid">
-            Login
-          </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
+    <div class=" w-full h-full flex justify-center items-center">
+      <mat-card class="w-96">
+        <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="login()" class="w-full flex justify-center flex-col">
+            <div>id</div>
+            <mat-form-field>
+              <input matInput type="text" formControlName="loginId" />
+            </mat-form-field>
+            <div>password</div>
+            <mat-form-field>
+              <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+            <div>
+              <button mat-raised-button type="submit" [disabled]="form.invalid">Login</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
   `,
 
   styles: [],
