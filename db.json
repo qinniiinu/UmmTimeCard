@@ -1,0 +1,170 @@
+{
+  "region": [
+    {
+      "id": 1,
+      "region": "北部",
+      "createDate": "2000-01-01"
+    },
+    {
+      "id": 2,
+      "region": "中部",
+      "createDate": "2000-01-01"
+    },
+    {
+      "id": 3,
+      "region": "南部",
+      "createDate": "2000-01-01"
+    },
+    {
+      "id": 4,
+      "region": "東部",
+      "createDate": "2000-01-01"
+    }
+  ],
+  "location": [
+    {
+      "id": 1,
+      "location": "Taipei, Taiwan",
+      "address": "123 Main Street",
+      "isValid": true,
+      "locationNumber": "A456",
+      "phone": "+886 123456789",
+      "createDate": "2023-11-07"
+    },
+    {
+      "id": 2,
+      "location": "New York, USA",
+      "address": "456 Elm Avenue",
+      "isValid": false,
+      "locationNumber": "B789",
+      "phone": "+1 212-555-6789",
+      "createDate": "2023-11-07"
+    },
+    {
+      "id": 3,
+      "location": "London, UK",
+      "address": "789 Oak Lane",
+      "isValid": true,
+      "locationNumber": "C123",
+      "phone": "+44 20 7123 4567",
+      "createDate": "2023-11-07"
+    },
+    {
+      "id": 4,
+      "location": "Paris, France",
+      "address": "321 Cedar Road",
+      "isValid": true,
+      "locationNumber": "D234",
+      "phone": "+33 1 2345 6789",
+      "createDate": "2023-11-07"
+    }
+  ],
+  "staff": [
+    [
+      {
+        "id": 1,
+        "staffName": "John Smith",
+        "staffNumber": "SF123",
+        "region": "北區",
+        "locationNumber": "LN001",
+        "gender": "Male",
+        "phone": "+1 123-456-7890",
+        "jobName": "Field Technician",
+        "arrivalDate": "2023-11-07",
+        "isValid": true,
+        "SuperiorNumber": "Mary Johnson"
+      },
+      {
+        "id": 2,
+        "staffName": "Alice Johnson",
+        "staffNumber": "SF456",
+        "region": "北區",
+        "locationNumber": "LN002",
+        "gender": "Female",
+        "phone": "+44 20 7123 4567",
+        "jobName": "Field Engineer",
+        "arrivalDate": "2023-11-07",
+        "isValid": true,
+        "SuperiorNumber": "David Williams"
+      },
+      {
+        "id": 3,
+        "staffName": "Michael Brown",
+        "staffNumber": "SF789",
+        "region": "北區",
+        "locationNumber": "LN003",
+        "gender": "Male",
+        "phone": "+886 987654321",
+        "jobName": "Field Inspector",
+        "arrivalDate": "2023-11-07",
+        "isValid": true,
+        "SuperiorNumber": "Karen Davis"
+      },
+      {
+        "id": 4,
+        "staffName": "Emily Davis",
+        "staffNumber": "SF456",
+        "region": "北區",
+        "locationNumber": "LN004",
+        "gender": "Female",
+        "phone": "+61 2 9876 5432",
+        "jobName": "Field Supervisor",
+        "arrivalDate": "2023-11-07",
+        "isValid": true,
+        "SuperiorNumber": "Daniel Miller"
+      },
+      {
+        "id": 5,
+        "staffName": "Karen Davis",
+        "staffNumber": "SF101",
+        "region": "北區",
+        "locationNumber": "LN005",
+        "gender": "Female",
+        "phone": "+27 11 123 4567",
+        "jobName": "Regional Manager",
+        "arrivalDate": "2023-11-08",
+        "isValid": true,
+        "SuperiorNumber": "John Smith"
+      },
+      {
+        "id": 6,
+        "staffName": "Daniel Miller",
+        "staffNumber": "SF202",
+        "region": "北區",
+        "locationNumber": "LN006",
+        "gender": "Male",
+        "phone": "+49 30 123456",
+        "jobName": "Logistics Coordinator",
+        "arrivalDate": "2023-11-08",
+        "isValid": true,
+        "SuperiorNumber": "Alice Johnson"
+      },
+      {
+        "id": 7,
+        "staffName": "David Williams",
+        "staffNumber": "SF303",
+        "region": "北區",
+        "locationNumber": "LN007",
+        "gender": "Male",
+        "phone": "+81 3 1234 5678",
+        "jobName": "Quality Control Specialist",
+        "arrivalDate": "2023-11-08",
+        "isValid": true,
+        "SuperiorNumber": "Michael Brown"
+      },
+      {
+        "id": 8,
+        "staffName": "Mary Johnson",
+        "staffNumber": "SF404",
+        "region": "北區",
+        "locationNumber": "LN008",
+        "gender": "Female",
+        "phone": "+1 987-654-3210",
+        "jobName": "Operations Director",
+        "arrivalDate": "2023-11-08",
+        "isValid": true,
+        "SuperiorNumber": "Emily Davis"
+      }
+    ]
+  ]
+}

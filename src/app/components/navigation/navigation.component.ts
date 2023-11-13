@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterChangeHandlerService } from 'src/app/router-change-handler.service';
 
 @Component({
   selector: 'app-navigation',
@@ -7,10 +8,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <ol class="breadcrumb">
-      <li><a href="#">one </a></li>
-      <li><a href="#">second</a></li>
-      <li><a href="#">three</a></li>
-      <li><a href="#">four</a></li>
+      <li *ngFor="let item of routeList">
+        <a href="#">{{ item }} </a>
+      </li>
     </ol>
   `,
   styles: [
@@ -30,4 +30,11 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+  routeList!: string[];
+  constructor(private routerChangeHandlerService: RouterChangeHandlerService) {
+    this.routerChangeHandlerService.routerChangeRouterList.subscribe(
+      (res) => (this.routeList = res)
+    );
+  }
+}
