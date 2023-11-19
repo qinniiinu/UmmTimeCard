@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Region, Staff } from 'src/app/api.service';
@@ -11,9 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   template: `
     <mat-table [dataSource]="dataSource" class="w-full">
       <!-- Position Column -->
-      <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-        <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-        <td mat-cell *matCellDef="let element" (click)="gogo(element)">{{ element[column] }}</td>
+      <ng-container [matColumnDef]="column.col" *ngFor="let column of Columns">
+        <th mat-header-cell *matHeaderCellDef>{{ column.colName }}</th>
+        <td mat-cell *matCellDef="let element" (click)="gogo(element)">
+          {{ element[column.col] }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -23,8 +25,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styles: [],
 })
 export class TableComponent {
-  @Input() displayedColumns: string[] = [];
+  @Input() Columns!: ColumnVM[];
   _dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  displayedColumns!: string[];
 
   @Input() set data(data: Region[] | Staff[]) {
     this._dataSource.data = data;
@@ -38,6 +41,10 @@ export class TableComponent {
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
+  ngOnChanges() {
+    this.displayedColumns = this.Columns.map((item) => item.col);
+  }
+
   gogo(row: Staff) {
     console.log(row);
     this.router.navigate(['./'], {
@@ -47,3 +54,9 @@ export class TableComponent {
     });
   }
 }
+export interface ColumnVM {
+  col: string;
+  colName: string;
+}
+
+type T = Region | Staff;
