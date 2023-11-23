@@ -5,23 +5,23 @@ import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { ApiService, Region, Staff } from '../api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterChangeHandlerService } from '../router-change-handler.service';
-import { ColumnVM, TableComponent } from './table/table.component';
+import { ColumnVM, T, TableComponent } from './table/table.component';
+import { Breadcrumb } from '../components/navigation/navigation.component';
 
 @Component({
   selector: 'app-table-container',
   standalone: true,
   imports: [CommonModule, RouterModule, MatButtonModule, TableComponent],
   template: ` <div class="bg-yellow-400 m-2">
-    <app-table [data]="data" [Columns]="dataColumns" (gogo)="go()"></app-table>page :
-    {{ page }} data :
+    <app-table [data]="data" [Columns]="Columns" (gogo)="go()"></app-table>page : {{ page }} data :
   </div>`,
   styles: [],
 })
 export class TableContainerComponent implements OnInit {
   page = 1;
-  data!: Region[] | Staff[];
-  routeList!: string[];
-  dataColumns!: ColumnVM[];
+  data: T[] = [];
+  routeList: Breadcrumb[] = [];
+  Columns!: ColumnVM[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,15 +30,33 @@ export class TableContainerComponent implements OnInit {
     private routerChangeHandlerService: RouterChangeHandlerService
   ) {
     this.page = this.activatedRoute.snapshot.params['page'] || 1;
-
     this.routerChangeHandlerService.routerChangeRouterList.subscribe((res) => {
-      this.routeList = res;
+      if (Array.isArray(res)) {
+        this.routeList = res;
+      } else {
+        console.log(`路由切換${res}`);
+
+        // eslint-disable-next-line no-inner-declarations
+        function findSubordinates(superior: string, list: Staff[]) {
+          const subordinates = list.filter((item) => item.SuperiorNumber === superior);
+          let allSubordinates = [...subordinates];
+
+          subordinates.forEach((element) => {
+            allSubordinates = allSubordinates.concat(findSubordinates(element.userId, list));
+          });
+          return subordinates;
+        }
+        if (res.type === 'staff')
+          this.data = findSubordinates(res.filterCondition, this.data as Staff[]);
+        if (res.type === 'region')
+          this.data = this.data.filter((item) => res.filterCondition === item.region);
+      }
       console.log(res, 'url');
     });
   }
 
   ngOnInit(): void {
-    switch (this.routeList[1]) {
+    switch (this.routeList[1].name) {
       case 'fieldStaff':
         this.getStaff();
         return;
@@ -50,7 +68,7 @@ export class TableContainerComponent implements OnInit {
 
   getStaff() {
     this.api.getStaff().subscribe((res) => {
-      const staffList = res.map((e) => e.staffName);
+      const staffList = res.map((e) => e.userName);
       res.forEach((element) => (element.isValid = staffList.includes(element.SuperiorNumber)));
       this.setTableData(res);
     });
@@ -62,16 +80,16 @@ export class TableContainerComponent implements OnInit {
     });
   }
 
-  setTableData(data: Region[] | Staff[]) {
+  setTableData(data: T[]) {
     this.data = data;
     const list = Object.entries(data[0]);
 
-    this.dataColumns = list.map((item) => ({
+    this.Columns = list.map((item) => ({
       col: item[0],
       colName: ColName.colName[item[0] as Col],
     }));
 
-    // { col: 'action', colName: '動作' }
+    this.Columns.push({ col: 'action', colName: '動作' });
   }
 
   go() {}
@@ -80,8 +98,8 @@ export class TableContainerComponent implements OnInit {
 export enum Col {
   createDate = 'createDate',
   id = 'id',
-  staffName = 'staffName',
-  staffNumber = 'staffNumber',
+  userName = 'userName',
+  userId = 'userId',
   region = 'region',
   locationNumber = 'locationNumber',
   gender = 'gender',
@@ -100,8 +118,8 @@ export namespace ColName {
   export const colName: ColNameType = {
     id: '編號',
     createDate: '創建日期',
-    staffName: '姓名',
-    staffNumber: '代號',
+    userName: '姓名',
+    userId: '代號',
     region: '區域',
     locationNumber: '處代號',
     gender: '性別',

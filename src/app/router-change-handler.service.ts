@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject, filter, tap } from 'rxjs';
+import { Breadcrumb } from './components/navigation/navigation.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RouterChangeHandlerService {
-  routerChangeRouterList = new BehaviorSubject<string[]>([]);
+  routerChangeRouterList = new BehaviorSubject<Breadcrumb | Breadcrumb[]>([]);
 
   constructor(private router: Router) {
     this.router.events
@@ -15,9 +16,19 @@ export class RouterChangeHandlerService {
         tap((res) => console.log(res))
       )
       .subscribe((event) => {
-        this.routerChangeRouterList.next(event.url.split('/').filter((item) => item));
+        const breadcrumb = event.url
+          .split('/')
+          .filter((item) => item)
+          .map((item) => ({
+            name: item,
+            type: 'route',
+            filterCondition: item,
+          }));
+        this.routerChangeRouterList.next(breadcrumb);
       });
   }
-}
 
-type T = any | null;
+  setRouterChangeRouterList(data: Breadcrumb) {
+    this.routerChangeRouterList.next(data);
+  }
+}
