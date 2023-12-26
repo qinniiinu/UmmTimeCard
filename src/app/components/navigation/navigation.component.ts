@@ -48,7 +48,7 @@ export interface Breadcrumb {
   /**顯示名稱 */
   name: string;
   /**型態 */
-  type: string;
+  breadType: string;
   /**過濾條件 */
   filterCondition: string;
 }

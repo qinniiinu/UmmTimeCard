@@ -33,7 +33,10 @@ export class TableContainerComponent implements OnInit {
     this.routerChangeHandlerService.routerChangeRouterList.subscribe((res) => {
       if (Array.isArray(res)) {
         this.routeList = res;
-      } else {
+      } else if ('breadType' in res) {
+        this.routeList.push(res);
+        console.log('麵包穴');
+
         console.log(`路由切換${res}`);
 
         // eslint-disable-next-line no-inner-declarations
@@ -46,9 +49,9 @@ export class TableContainerComponent implements OnInit {
           });
           return subordinates;
         }
-        if (res.type === 'staff')
+        if (res.breadType === 'staff')
           this.data = findSubordinates(res.filterCondition, this.data as Staff[]);
-        if (res.type === 'region')
+        if (res.breadType === 'region')
           this.data = this.data.filter((item) => res.filterCondition === item.region);
       }
       console.log(res, 'url');

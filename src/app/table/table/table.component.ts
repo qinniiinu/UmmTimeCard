@@ -22,7 +22,9 @@ import { MatButtonModule } from '@angular/material/button';
             <button mat-raised-button (click)="gogo(element)">人員</button>
           </ng-container>
           <ng-container *ngSwitchCase="'isValid'">
-            <button mat-raised-button (click)="gogo(element)">轄下</button>
+            <button mat-raised-button (click)="gogo(element)" *ngIf="element['SuperiorNumber']">
+              轄下
+            </button>
           </ng-container>
           <ng-container *ngSwitchDefault>{{ element[column.col] }}</ng-container>
         </div>
@@ -59,30 +61,32 @@ export class TableComponent implements OnInit {
     this.displayedColumns = this.Columns.map((item) => item.col);
   }
 
-  /** 轄下導航 */
+  /** 導航員工列表 */
   gogo(row: T) {
     console.log(row);
     const breadcrumb = {} as Breadcrumb;
     if ('region' in row) {
       breadcrumb.name = row.region;
-      breadcrumb.type = 'region';
+      console.log(row);
+      breadcrumb.breadType = 'region';
       breadcrumb.filterCondition = row.region;
     }
 
     if ('userName' in row) {
       breadcrumb.name = row.userName;
-      breadcrumb.type = 'staff';
+      breadcrumb.breadType = 'staff';
       breadcrumb.filterCondition = row.userId;
     }
 
     console.log(breadcrumb);
     this.routerChangeHandlerService.setRouterChangeRouterList(breadcrumb);
+    this.router.navigate(['/home', 'fieldStaff'], { queryParams: { name: row.region } });
   }
 
   goLocation(row: Location) {
     const breadcrumb = {} as Breadcrumb;
     breadcrumb.name = row.region;
-    breadcrumb.type = 'location';
+    breadcrumb.breadType = 'location';
     breadcrumb.filterCondition = row.location;
     this.routerChangeHandlerService.setRouterChangeRouterList(breadcrumb);
   }

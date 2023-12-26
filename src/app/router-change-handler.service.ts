@@ -21,7 +21,7 @@ export class RouterChangeHandlerService {
           .filter((item) => item)
           .map((item) => ({
             name: item,
-            type: 'route',
+            breadType: 'route',
             filterCondition: item,
           }));
         this.routerChangeRouterList.next(breadcrumb);
